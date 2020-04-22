@@ -41,6 +41,11 @@
 <body>
 
 	<div class="container">
+
+		{{> _msg}} {{!-- views/partials/_msg.handlebars --}} 
+		
+		{{> _errors}} {{!-- views/partials/_errors.handlebars --}}
+
 		{{{body}}}
 	</div>
 

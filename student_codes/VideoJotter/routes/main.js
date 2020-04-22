@@ -23,12 +23,15 @@ router.get('/showRegister', (req, res) =>{
 	res.render('user/register')
 });
 
-//about
-router.get('/about', (req,res) => {
+//error msg + about
+router.get('/about', (req, res) => {
 	const author = 'Hieu Nguyen';
-	res.render('about',{
-		author:author
-	})
-})
+	let success_msg = 'Success message';
+	let error_msg = 'Error message using error_msg';
+	
+	res.render('about', {
+	author: author, success_msg: success_msg, error_msg: error_msg
+	}) 
+});
 
 module.exports = router;
