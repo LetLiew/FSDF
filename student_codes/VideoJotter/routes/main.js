@@ -29,7 +29,7 @@ router.get('/about', (req, res) => {
 	const author = 'Hieu Nguyen';
 	
 	alertMessage(res, 'success', // is not rendering
-		'This is an important message', '', true);
+		'This is an important message', 'fas fa-sign-in-alt', true);
 	alertMessage(res, 'danger',
 		'Unauthorised access', 'fas fa-exclamation-circle', false);
 
