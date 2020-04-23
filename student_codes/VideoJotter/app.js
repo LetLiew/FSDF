@@ -10,6 +10,7 @@ const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
+const FlashMessenger = require('flash-messenger'); // add this require
 
 /*
 * Loads routes file main.js in routes directory. The main.js determines which function
@@ -63,6 +64,9 @@ app.use(session({
 
 // init connect-flash
 app.use(flash());
+
+// init flash-messenger
+app.use(FlashMessenger.middleware)
 
 // Place to define global variables - not used in practical 1
 app.use(function (req, res, next) {
