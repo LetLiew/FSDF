@@ -28,9 +28,10 @@ router.get('/about', (req, res) => {
 	const author = 'Hieu Nguyen';
 	let success_msg = 'Success message';
 	let error_msg = 'Error message using error_msg';
-	
+	var errors = [{text: 'First error message'},{text: 'Second error message'},{text: 'Third error message'}]
+
 	res.render('about', {
-	author: author, success_msg: success_msg, error_msg: error_msg
+	author: author, success_msg: success_msg, error_msg: error_msg, errors : errors,
 	}) 
 });
 
