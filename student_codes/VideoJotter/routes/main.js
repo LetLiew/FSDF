@@ -35,10 +35,13 @@ router.get('/about', (req, res) => {
 
 	let success_msg = 'Success message';
 	let error_msg = 'Error message using error_msg';
+	let error = {
+		text: "Error message using error object"
+	}
 	var errors = [{ text: 'First error message' }, { text: 'Second error message' }, { text: 'Third error message' }]
 
 	res.render('about', {
-		author: author, success_msg: success_msg, error_msg: error_msg, errors: errors,
+		author: author, success_msg: success_msg, error_msg: error_msg, errors: errors, error: error
 	})
 });
 

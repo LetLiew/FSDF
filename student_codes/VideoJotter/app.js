@@ -18,6 +18,9 @@ const FlashMessenger = require('flash-messenger'); // add this require
 */
 const mainRoute = require('./routes/main');
 
+//init /userRoute path
+const userRoute = require('./routes/user');
+
 /*
 * Creates an Express server - Express is a web application framework for creating web applications
 * in Node JS.
@@ -80,6 +83,8 @@ app.use(function (req, res, next) {
 * */
 app.use('/', mainRoute); // mainRoute is declared to point to routes/main.js
 // This route maps the root URL to any path defined in main.js
+
+app.use('/user', userRoute); // userRoute
 
 /*
 * Creates a unknown port 5000 for express server since we don't want our app to clash with well known
