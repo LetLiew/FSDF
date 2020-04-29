@@ -13,6 +13,7 @@ const flash = require('connect-flash');
 const FlashMessenger = require('flash-messenger'); // add this require
 const Handlebars = require('handlebars');
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
+
 // Bring in database connection
 const vidjotDB = require('./config/DBConnection');
 
