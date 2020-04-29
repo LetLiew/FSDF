@@ -11,6 +11,10 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const FlashMessenger = require('flash-messenger'); // add this require
+const Handlebars = require('handlebars');
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
+
+
 
 /*
 * Loads routes file main.js in routes directory. The main.js determines which function
@@ -38,7 +42,8 @@ const app = express();
 *
 * */
 app.engine('handlebars', exphbs({
-	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
+	defaultLayout: 'main', // Specify default template views/layout/main.handlebar 
+	handlebars: allowInsecurePrototypeAccess(Handlebars)
 }));
 app.set('view engine', 'handlebars');
 
