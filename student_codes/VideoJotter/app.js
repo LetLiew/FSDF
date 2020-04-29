@@ -13,8 +13,11 @@ const flash = require('connect-flash');
 const FlashMessenger = require('flash-messenger'); // add this require
 const Handlebars = require('handlebars');
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
+// Bring in database connection
+const vidjotDB = require('./config/DBConnection');
 
-
+// Connects to MySQL database
+vidjotDB.setUpDB(false); // To set up database with new tables set (true)
 
 /*
 * Loads routes file main.js in routes directory. The main.js determines which function
