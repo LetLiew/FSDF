@@ -27,7 +27,7 @@ router.get('/showRegister', (req, res) => {
 //error msg + about
 router.get('/about', (req, res) => {
 	const author = 'Hieu Nguyen';
-	
+
 	alertMessage(res, 'success', // is not rendering
 		'This is an important message', 'fas fa-sign-in-alt', true);
 	alertMessage(res, 'danger',
