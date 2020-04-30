@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const FlashMessenger = require('flash-messenger'); // add this require
 const Handlebars = require('handlebars');
-const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 
 // Bring in database connection
 const vidjotDB = require('./config/DBConnection');
@@ -65,6 +65,23 @@ app.use(methodOverride('_method'));
 
 // Enables session to be stored using browser's Cookie ID
 app.use(cookieParser());
+
+// Express session middleware - uses MySQL to store session
+app.use(session({
+	key: 'vidjot_session', secret: 'tojiv',
+	store: new MySQLStore({
+		host: db.host,
+		port: 3306,
+		user: db.username,
+		password: db.password,
+		database: db.database,
+		clearExpired: true,
+		// How frequently expired sessions will be cleared; milliseconds:
+		checkExpirationInterval: 900000,
+		// The maximum age of a valid session; milliseconds: expiration: 900000,
+	}),
+	resave: false, saveUninitialized: false,
+}));
 
 // To store session information. By default it is stored as a cookie on browser
 app.use(session({
