@@ -14,6 +14,9 @@ const FlashMessenger = require('flash-messenger'); // add this require
 const Handlebars = require('handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 
+//encyptor
+var bcrypt = require('bcryptjs');
+
 // Library to use MySQL to store session objects
 const MySQLStore = require('express-mysql-session');
 const db = require('./config/db'); // db.js config file
