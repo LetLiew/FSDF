@@ -32,9 +32,10 @@ vidjotDB.setUpDB(false); // To set up database with new tables set (true)
 * will be called based on the HTTP request and URL.
 */
 const mainRoute = require('./routes/main');
-
 //init /userRoute path
 const userRoute = require('./routes/user');
+//init /videoRoute path
+const videoRoute = require('./routes/video')
 
 /*
 * Creates an Express server - Express is a web application framework for creating web applications
@@ -126,6 +127,7 @@ app.use('/', mainRoute); // mainRoute is declared to point to routes/main.js
 // This route maps the root URL to any path defined in main.js
 
 app.use('/user', userRoute); // userRoute
+app.use('/video', videoRoute); //videosRoute
 
 /*
 * Creates a unknown port 5000 for express server since we don't want our app to clash with well known
