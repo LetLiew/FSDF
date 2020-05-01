@@ -13,6 +13,7 @@ const flash = require('connect-flash');
 const FlashMessenger = require('flash-messenger'); // add this require
 const Handlebars = require('handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+const passport = require('passport');
 
 //encyptor
 var bcrypt = require('bcryptjs');
@@ -26,6 +27,10 @@ const vidjotDB = require('./config/DBConnection');
 
 // Connects to MySQL database
 vidjotDB.setUpDB(false); // To set up database with new tables set (true)
+
+// Passport Config
+const authenticate = require('./config/passport');
+authenticate.localStrategy(passport);
 
 /*
 * Loads routes file main.js in routes directory. The main.js determines which function
@@ -90,6 +95,10 @@ app.use(session({
 	}),
 	resave: false, saveUninitialized: false,
 }));
+
+// Initilize Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // To store session information. By default it is stored as a cookie on browser
 app.use(session({

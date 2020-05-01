@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
+
 // User register URL using HTTP post => /user/register
 
 const User = require('../models/User');
 const alertMessage = require('../helpers/messenger');
 
 const bcrypt = require('bcryptjs'); //import encryptor
-
+const passport = require('passport'); //import passport
 
 router.post('/register', (req, res) => {
     let errors = [];
@@ -51,7 +52,7 @@ router.post('/register', (req, res) => {
                     // Create new user record
                     bcrypt.genSalt(10, function (err, salt) {
                         bcrypt.hash(password, salt, function (err, hash) {
-                            User.create({ name, email, password: hash})
+                            User.create({ name, email, password: hash })
                                 .then(user => {
                                     alertMessage(res, 'success', user.name + ' added. Please login', 'fas fa-sign-in-alt', true);
                                     res.redirect('/showLogin');
@@ -63,6 +64,17 @@ router.post('/register', (req, res) => {
             })
     }
 
+});
+
+// Login Form POST => /user/login
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/video/listVideos', // Route to /video/listVideos URL 
+        failureRedirect: '/showLogin', // Route to /login URL
+        failureFlash: true
+        /* Setting the failureFlash option to true instructs Passport to flash an error message using the message given by the strategy's verify callback, if any. 
+        When a failure occur passport passes the message object as error */
+    })(req, res, next);
 });
 
 
