@@ -13,9 +13,13 @@ const flash = require('connect-flash');
 const FlashMessenger = require('flash-messenger'); // add this require
 const Handlebars = require('handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+const passport = require('passport');
+
+//encyptor
+var bcrypt = require('bcryptjs');
 
 // Library to use MySQL to store session objects
-const MySQLStore = require('express-mysql-session'); 
+const MySQLStore = require('express-mysql-session');
 const db = require('./config/db'); // db.js config file
 
 // Bring in database connection
@@ -24,14 +28,19 @@ const vidjotDB = require('./config/DBConnection');
 // Connects to MySQL database
 vidjotDB.setUpDB(false); // To set up database with new tables set (true)
 
+// Passport Config
+const authenticate = require('./config/passport');
+authenticate.localStrategy(passport);
+
 /*
 * Loads routes file main.js in routes directory. The main.js determines which function
 * will be called based on the HTTP request and URL.
 */
 const mainRoute = require('./routes/main');
-
 //init /userRoute path
 const userRoute = require('./routes/user');
+//init /videoRoute path
+const videoRoute = require('./routes/video')
 
 /*
 * Creates an Express server - Express is a web application framework for creating web applications
@@ -87,6 +96,10 @@ app.use(session({
 	resave: false, saveUninitialized: false,
 }));
 
+// Initilize Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // To store session information. By default it is stored as a cookie on browser
 app.use(session({
 	key: 'vidjot_session',
@@ -100,6 +113,14 @@ app.use(flash());
 
 // init flash-messenger
 app.use(FlashMessenger.middleware)
+
+app.use(function (req, res, next) {
+	res.locals.success_msg = req.flash('success_msg');
+	res.locals.error_msg = req.flash('error_msg');
+	res.locals.error = req.flash('error');
+	res.locals.user = req.user || null;
+	next();
+});
 
 // Place to define global variables - not used in practical 1
 app.use(function (req, res, next) {
@@ -115,6 +136,7 @@ app.use('/', mainRoute); // mainRoute is declared to point to routes/main.js
 // This route maps the root URL to any path defined in main.js
 
 app.use('/user', userRoute); // userRoute
+app.use('/video', videoRoute); //videosRoute
 
 /*
 * Creates a unknown port 5000 for express server since we don't want our app to clash with well known
