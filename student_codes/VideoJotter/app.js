@@ -15,7 +15,7 @@ const Handlebars = require('handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 
 // Library to use MySQL to store session objects
-const MySQLStore = require('express-mysql-session'); 
+const MySQLStore = require('express-mysql-session');
 const db = require('./config/db'); // db.js config file
 
 // Bring in database connection
@@ -100,6 +100,14 @@ app.use(flash());
 
 // init flash-messenger
 app.use(FlashMessenger.middleware)
+
+app.use(function (req, res, next) {
+	res.locals.success_msg = req.flash('success_msg');
+	res.locals.error_msg = req.flash('error_msg');
+	res.locals.error = req.flash('error');
+	res.locals.user = req.user || null;
+	next();
+});
 
 // Place to define global variables - not used in practical 1
 app.use(function (req, res, next) {

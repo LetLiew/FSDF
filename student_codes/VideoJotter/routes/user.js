@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 // User register URL using HTTP post => /user/register
 
+const User = require('../models/User');
+const alertMessage = require('../helpers/messenger');
 
 
 router.post('/register', (req, res) => {
@@ -32,12 +34,12 @@ router.post('/register', (req, res) => {
 
     else {
         //if all is well, checks if user is already registered.
-        User.findOne({where: {email: red.body.email}})
+        User.findOne({where: {email: req.body.email}})
             .then(user => {
                 if(user){
                     // If user is found, that means email has already been registered
                     res.render('user/register',{
-                        error: user.email + ' already registerd',
+                        error: {text: `${user.email} has already been registered.`},
                         name,
                         email,
                         password,
@@ -54,6 +56,8 @@ router.post('/register', (req, res) => {
                 }
             })
     }
+
+});
 
 
 module.exports = router;
