@@ -7,4 +7,8 @@ router.get('/listVideos', (req, res) => {
     });
 });
 
+router.get('/showAddVideo', (req,res) =>{
+    res.render('video/addVideo')
+});
+
 module.exports = router;
