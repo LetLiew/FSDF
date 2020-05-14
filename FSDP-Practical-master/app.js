@@ -42,8 +42,7 @@ const videoRoute = require('./routes/video');
 
 // Bring in Handlebars Helpers here
 // Copy and paste this statement only!!
-const {formatDate} = require('./helpers/hbs');
-
+const {formatDate, radioCheck} = require('./helpers/hbs');
 
 /*
 * Creates an Express server - Express is a web application framework for creating web applications
@@ -62,10 +61,11 @@ const app = express();
 *
 * */
 app.engine('handlebars', exphbs({
-	helpers: {
-		formatDate: formatDate
-	},
 	handlebars: allowInsecurePrototypeAccess(Handlebars),
+	helpers: {
+		formatDate: formatDate,
+		radioCheck: radioCheck
+	},
 	defaultLayout: 'main' // Specify default template views/layout/main.handlebar 
 }));
 app.set('view engine', 'handlebars');
