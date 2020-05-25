@@ -52,7 +52,6 @@ router.get('/listVideos',ensureAuthenticated, (req, res) => {
 });
 
 router.get('/showAddVideo',ensureAuthenticated, (req, res) => {
-
     res.render('video/addVideo');
 });
 
