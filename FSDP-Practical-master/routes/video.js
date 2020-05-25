@@ -3,6 +3,7 @@ const router = express.Router();
 const moment = require('moment');
 const Video = require('../models/Video');
 const ensureAuthenticated = require('../helpers/auth');
+const alertMessage = require('../helpers/messenger');
 
 // Adds new video jot from /video/addVideo
 router.post('/showAddVideo',ensureAuthenticated, (req, res) => {
@@ -123,6 +124,8 @@ router.get('/delete/:id',ensureAuthenticated, (req,res) =>{
             userID: userId,
         }
     }).then((video)=>{
+        let title = video.title
+
         if(video == null){
             res.redirect('/logout');
         }
@@ -132,6 +135,7 @@ router.get('/delete/:id',ensureAuthenticated, (req,res) =>{
                 id: videoId
                 }
                 }).then((video) =>{
+                    alertMessage(res, 'success','Video ' + title + ' is successfully deleted', 'fas fa-sign-in-alt', true)
                     res.redirect('/video/listVideos');
                 })
         };
