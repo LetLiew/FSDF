@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const moment = require('moment');
 const Video = require('../models/Video');
+const ensureAuthenticated = require('../helpers/auth');
 
 // Adds new video jot from /video/addVideo
-router.post('/showAddVideo', (req, res) => {
+router.post('/showAddVideo',ensureAuthenticated, (req, res) => {
     let title = req.body.title;
     let story = req.body.story.slice(0, 1999);
     let dateRelease = moment(req.body.dateRelease, 'DD/MM/YYYY');
@@ -29,7 +30,7 @@ router.post('/showAddVideo', (req, res) => {
 });
 
 // List videos belonging to current logged in user
-router.get('/listVideos', (req, res) => {
+router.get('/listVideos',ensureAuthenticated, (req, res) => {
 
     Video.findAll({
         where: {
@@ -49,23 +50,23 @@ router.get('/listVideos', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/showAddVideo', (req, res) => {
+router.get('/showAddVideo',ensureAuthenticated, (req, res) => {
 
     res.render('video/addVideo');
 });
 
 // Shows edit video page
-router.get('/edit/:id', (req, res) => {
+router.get('/edit/:id',ensureAuthenticated, (req, res) => {
     Video.findOne({
         where: {
             id: req.params.id
         }
     }).then((video) => {
         checkOptions(video);
-        // call views/video/editVideo.handlebar to render the edit video page
-        res.render('video/editVideo', {
+        if (req.user.id === video.userId){
+        res.render('video/editVideo', {         // call views/video/editVideo.handlebar to render the edit video page
             video // passes video object to handlebar
-        });
+        });}
     }).catch(err => console.log(err)); // To catch no video ID
 });
 
@@ -86,7 +87,7 @@ function checkOptions(video) {
 }
 
 //save Edited Video
-router.put('/saveEditedVideo/:id', (req, res) => {
+router.put('/saveEditedVideo/:id',ensureAuthenticated, (req, res) => {
     let title = req.body.title;
     let story = req.body.story.slice(0, 1999);
     let dateRelease = moment(req.body.dateRelease, "DD/MM/YYYY");
@@ -109,6 +110,31 @@ router.put('/saveEditedVideo/:id', (req, res) => {
         }
     }).then((video) => {
         res.redirect('/video/listVideos');
+    }).catch(err => console.log(err));
+});
+
+router.get('/delete/:id',ensureAuthenticated, (req,res) =>{
+    let videoId = req.params.id;
+    let userId = req.user.id;
+
+    Video.findOne({
+        where:{
+            id:videoId,
+            userID: userId,
+        }
+    }).then((video)=>{
+        if(video == null){
+            res.redirect('/logout');
+        }
+        else{
+            Video.destroy({
+                where: {
+                id: videoId
+                }
+                }).then((video) =>{
+                    res.redirect('/video/listVideos');
+                })
+        };
     }).catch(err => console.log(err));
 });
 
