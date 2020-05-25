@@ -16,27 +16,34 @@
 				<div class="row mb-2">
 					<div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-4">
 						<label class="font-italic">Date of release</label>
-						<input id="datepicker" width="200" name="dateRelease" value="01/01/2020"readonly/>
+						<input id="datepicker" width="200" name="dateRelease" value="01/01/2020" readonly />
 					</div>
 					<div class="col-12 col-sm-12 col-md-12 col-lg-6">
 						<label class="font-italic">Language</label>
 						<br>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" name="language" id="chinese" value="Chinese">
+							<input class="form-check-input" type="checkbox" name="language" id="chineseLang" value="Chinese"
+								onclick="languageCheck()">
 							<label class="form-check-label" for="chinese">Chinese</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" name="language" id="english" value="English" checked>
+							<input class="form-check-input" type="checkbox" name="language" id="englishLang" value="English"
+								onclick="languageCheck()" checked>
 							<label class="form-check-label" for="englishLang">English</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" name="language" id="malay" value="Malay">
+							<input class="form-check-input" type="checkbox" name="language" id="malayLang" value="Malay"
+								onclick="languageCheck()">
 							<label class="form-check-label" for="malay">Malay</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" name="language" id="tamil" value="Tamil">
+							<input class="form-check-input" type="checkbox" name="language" id="tamilLang" value="Tamil"
+								onclick="languageCheck()">
 							<label class="form-check-label" for="tamil">Tamil</label>
 						</div>
+						<p class='font-weight-bold text-info' id='languageErr' style='display:none'>
+							Please select one language
+						</p>
 
 					</div>
 				</div>
@@ -48,11 +55,13 @@
 						<label class="font-italic">Subtitles</label>
 						<br>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" name="subtitles" id="chinese" value="Chinese">
+							<input class="form-check-input" type="checkbox" name="subtitles" id="chinese"
+								value="Chinese">
 							<label class="form-check-label" for="chinese">Chinese</label>
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" name="subtitles" id="english" value="English" checked>
+							<input class="form-check-input" type="checkbox" name="subtitles" id="english"
+								value="English" checked>
 							<label class="form-check-label" for="englishLang">English</label>
 						</div>
 						<div class="form-check form-check-inline">
@@ -69,7 +78,7 @@
 								<input type="text" class="form-control form-control-sm" name="otherSub" id="otherSub" placeholder="Other">
 							</div>
 						</div>--}}
-						
+
 					</div>
 
 					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
@@ -111,9 +120,9 @@
 </div>
 
 <script>
-		$('#datepicker').datepicker({
-			format: 'dd/mm/yyyy',
-			value: new Date().toLocaleDateString('en-SG'),
-			uiLibrary: 'bootstrap4',
-		});
+	$('#datepicker').datepicker({
+		format: 'dd/mm/yyyy',
+		value: new Date().toLocaleDateString('en-SG'),
+		uiLibrary: 'bootstrap4',
+	});
 </script>

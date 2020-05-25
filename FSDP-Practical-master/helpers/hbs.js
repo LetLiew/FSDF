@@ -13,4 +13,13 @@ module.exports = {
         }
         return 'checked';
     },
+
+    //replaceCommas note : value == string
+    replaceCommas: function(value){
+        if (value == ''){ // empty string
+            return 'None'
+        }
+        else{
+            return value.replace(/,/g,' | ')}
+    }
 };
