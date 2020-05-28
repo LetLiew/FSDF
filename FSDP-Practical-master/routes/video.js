@@ -6,7 +6,7 @@ const ensureAuthenticated = require('../helpers/auth');
 const alertMessage = require('../helpers/messenger');
 
 // Adds new video jot from /video/addVideo
-router.post('/showAddVideo',ensureAuthenticated, (req, res) => {
+router.post('/addVideoJot',ensureAuthenticated, (req, res) => {
     let title = req.body.title;
     let story = req.body.story.slice(0, 1999);
     let dateRelease = moment(req.body.dateRelease, 'DD/MM/YYYY');
@@ -14,6 +14,8 @@ router.post('/showAddVideo',ensureAuthenticated, (req, res) => {
     let subtitles = req.body.subtitles === undefined ? '' : req.body.subtitles.toString();
     let classification = req.body.classification;
     let userId = req.user.id;
+    let starring = req.body.starring;
+    let posterURL = req.body.posterURL;
 
     // Multi-value components return array of strings or undefined
     Video.create({
@@ -23,7 +25,9 @@ router.post('/showAddVideo',ensureAuthenticated, (req, res) => {
         language,
         subtitles,
         dateRelease,
-        userId
+        userId,
+        starring,
+        posterURL,
     }).then((video) => {
         res.redirect('/video/listVideos');
     })
@@ -87,7 +91,7 @@ function checkOptions(video) {
 }
 
 //save Edited Video
-router.put('/saveEditedVideo/:id',ensureAuthenticated, (req, res) => {
+router.put('/edit/saveEditedVideo/:id',ensureAuthenticated, (req, res) => {
     let title = req.body.title;
     let story = req.body.story.slice(0, 1999);
     let dateRelease = moment(req.body.dateRelease, "DD/MM/YYYY");
@@ -96,6 +100,8 @@ router.put('/saveEditedVideo/:id',ensureAuthenticated, (req, res) => {
         req.body.subtitles.toString();
 
     let classification = req.body.classification;
+    let starring = req.body.starring;
+    let posterURL = req.body.posterURL;
 
     Video.update({
         title,
@@ -104,6 +110,8 @@ router.put('/saveEditedVideo/:id',ensureAuthenticated, (req, res) => {
         language,
         subtitles,
         dateRelease,
+        starring,
+        posterURL,
     }, {
         where: {
             id: req.params.id
