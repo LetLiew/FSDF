@@ -50,3 +50,11 @@ function getOMdbMovie() {
 
 }
 
+function toUpperCase() {
+    let str = document.getElementById("title");
+    str.value = str.value.replace(
+        /\w\S*/g,
+        function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+  }
