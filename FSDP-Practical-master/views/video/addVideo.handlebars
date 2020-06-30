@@ -7,7 +7,8 @@
 				<div class='col-lg-9'>
 					<div class="form-group">
 						<label class="font-italic" for="title">Title</label>
-						<textarea class="form-control" id="title" name="title" rows="1" onblur="toUpperCase()"></textarea>
+						<textarea class="form-control" id="title" name="title" rows="1"
+							onblur="toUpperCase()"></textarea>
 						<a href="#" onclick="getOMdbMovie()" tabindex="-1" class="card-link">
 							<i class="fas fa-film"></i>
 							Get Open Movie DB Data
@@ -24,9 +25,12 @@
 					</div>
 				</div>
 				<div class='col-lg-3'>
+					<input type='file' id='posterUpload' name='posterUpload'
+						accept="image/jpg,image/jpeg,image/png,image/gif">
 					<img id="poster" src="/img/no-image.jpg" alt="" class="border img-thumbnail img-fluid"
 						style="height:95%;width:100%">
 					<input id="posterURL" type="hidden" name="posterURL">
+					<div class="font-weight-bold text-danger-small" id="posterErr" style="display:none"></div>>
 				</div>
 			</div>
 
