@@ -108,8 +108,6 @@ router.put("/edit/saveEditedVideo/:id", ensureAuthenticated, (req, res) => {
   let starring = req.body.starring;
   let posterURL = req.body.posterURL;
 
-  console.log(posterURL);
-
   Video.update(
     {
       title,

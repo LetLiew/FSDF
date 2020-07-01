@@ -30,7 +30,7 @@
 						accept="image/jpg,image/jpeg,image/png,image/gif">
 					<img id="poster" src="{{video.posterURL}}" alt="" class="border img-thumbnail img-fluid"
 						style="height:95%;width:100%">
-					<input id="posterURL" type="hidden" name="posterURL">
+					<input id="posterURL" type="hidden" name="posterURL" value="{{video.posterURL}}">
 					<div class="font-weight-bold text-danger-small" id="posterErr" style="display:none"></div>>
 				</div>
 			</div>
@@ -155,6 +155,4 @@
 		format: 'dd/mm/yyyy',
 		uiLibrary: 'bootstrap4',
 	});
-
-	//use form append Data??
 </script>
